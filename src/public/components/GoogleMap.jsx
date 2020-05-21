@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import apikey from '../../config.js';
+import apikey from '../../../config.js';
 import { MyMapContainer } from '../css/MapStyles';
 
 class GoogleMap extends Component {
