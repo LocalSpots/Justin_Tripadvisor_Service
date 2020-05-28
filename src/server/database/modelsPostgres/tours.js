@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
       return_details: DataTypes.TEXT,
     },
     {
-      tableName: 'Tours',
+      tableName: 'tours',
     });
 
   return Tour;

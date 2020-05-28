@@ -3,7 +3,12 @@ package-lock.json
 # dist
 /coverage/
 config.js
-snakeadvisoritinerary.pem
-# ssh -i snakeadvisoritinerary.pem ec2-user@ec2-34-217-207-61.us-west-2.compute.amazonaws.com
-# scp -i snakeadvisoritinerary.pem filename ec2-user@34.217.207.61:~
-# scp -i snakeadvisoritinerary.pem -r foldername ec2-user@34.217.207.61:~
+
+
+tours.csv
+attractions.csv
+ToursAttractions.csv
+
+
+src/server/database/dataSchema/mongoDB.js
+src/server/database/modelsMySQL
