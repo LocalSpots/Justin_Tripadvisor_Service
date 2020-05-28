@@ -3,6 +3,9 @@ const faker = require('faker');
 const fs = require('fs');
 const path = require('path');
 
+// const writeUsers = fs.createWriteStream('users.csv');
+// writeUsers.write('id,t,a\n', 'utf8');
+
 module.exports = function (models) {
   const cancellationPolicies = [
     'For a full refund, cancel at least 24 hours in advance of the start date of the experience.',
@@ -76,7 +79,7 @@ module.exports = function (models) {
 
   // Make a batch of tours:
   const tours = [];
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 100; i += 1) { //100 ori
     const tour = {
       name: makeTitle(),
       overview: faker.lorem.sentences(),
@@ -88,7 +91,7 @@ module.exports = function (models) {
 
   // Make a batch of attractions:
   const attractions = [];
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 500; i += 1) { //500 ori
     const attraction = {
       name: faker.lorem.words(),
       latitude: Math.random() * (coords.north - coords.south) + coords.south,
@@ -102,31 +105,32 @@ module.exports = function (models) {
   }
 
   // Stick that into the database
-  models.Attraction.bulkCreate(attractions,
+  models.attraction.bulkCreate(attractions,
     {
       updateOnDuplicate: ['name'],
     })
     .then(() => {
-      models.Tour.bulkCreate(tours, {
+      models.tours.bulkCreate(tours, {
         updateOnDuplicate: ['name'],
       });
     })
     .then(() => {
-      for (let i = 0; i < 500; i += 1) {
+      for (let i = 0; i < 500; i += 1) { //500 ori
         // A given tour is going to have an ID between 1 and 100
-        const tour_id = _.random(1, 100);
+        const tour_id = _.random(1, 100); //100 ori
         // a given attraction will have an ID between 1 and 500
         const attraction_id = i;
-        models.Attraction.findOne({
+        models.attraction.findOne({
           where: { id: attraction_id },
         })
           .then((attraction) => {
-            models.Tour.findOne({
+            models.tours.findOne({
               where: {
                 id: tour_id,
               },
             })
               .then((tour) => {
+                console.log('data generation complete');
                 tour.addAttraction(attraction);
               })
               .catch((error) => {
@@ -135,4 +139,44 @@ module.exports = function (models) {
           });
       }
     });
+
+
+
+  // function writeTenMillionUsers(writer, encoding, callback) {
+  //   let i = 100;
+  //   let id = 0;
+  //   function write() {
+  //     let ok = true;
+  //     do {
+  //       i -= 1;
+  //       id += 1;
+  //       // const tours = faker.internet.userName();
+  //       // const attractions = faker.image.avatar();
+  //       const t = tours[1]
+  //     const a = attractions[2]
+  //       const data = `${id},${t},${a}\n`;
+  //       if (i === 0) {
+  //         writer.write(data, encoding, callback);
+  //       } else {
+  // // see if we should continue, or wait
+  // // don't pass the callback, because we're not done yet.
+  //         ok = writer.write(data, encoding);
+  //       }
+  //     } while (i > 0 && ok);
+  //     if (i > 0) {
+  // // had to stop early!
+  // // write some more once it drains
+  //       writer.once('drain', write);
+  //     }
+  //   }
+  // write()
+  // }
+
+
+  // writeTenMillionUsers(writeUsers, 'utf-8', () => {
+  //   console.log('data generation complete, old');
+  //   writeUsers.end();
+  // });
+
+
 };

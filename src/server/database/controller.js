@@ -1,5 +1,5 @@
 const sequelize = require('sequelize');
-const models = require('./models');
+const models = require('./modelsPostgres');
 
 const { Tour } = models;
 // this is const Tour = models.Tour but it's defined using destructuring
@@ -41,3 +41,7 @@ module.exports.getRandomTour = function (callback) {
       callback(error, null);
     });
 };
+
+
+////
+
