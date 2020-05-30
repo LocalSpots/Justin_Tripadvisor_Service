@@ -10,7 +10,7 @@ writeAttractions.write('id,name,latitude,longitude, description,rating,image_pat
 // const randomReviewId = () => Math.floor(Math.random() * Math.floor(100));
 
 const writeOneMillion = (writer, encoding, callback) => {
-  let i = 1000000;
+  let i = 4500000;
   let id = 0;
 
   const coords = {

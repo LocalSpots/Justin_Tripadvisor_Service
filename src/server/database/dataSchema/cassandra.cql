@@ -1,115 +1,47 @@
+-------------------------------------------------------------
 
-CREATE KEYSPACE IF NOT EXISTS snaketours WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
--- AND durable_writes = 'false'; // increase the speed of write, also increase the risk of data loss
+-- CREATE KEYSPACE IF NOT EXISTS snaketours WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+-- -- AND durable_writes = 'false'; // increase the speed of write, also increase the risk of data loss
+-- USE snaketours;
 
+CREATE KEYSPACE IF NOT EXISTS snaketours
+WITH replication = {'class' : 'SimpleStrategy', 'replication_factor': 3};
 USE snaketours;
-
--- working follow..
-
-CREATE TABLE tours (
-    tourId int,
-    attractionId int,
-    name text,
-    overview text,
-    cancellation_policy text,
-    return_details text,
-    PRIMARY KEY(tourId),
-)WITH CLUSTERING ORDER BY (tourId ASC);
-
-CREATE TABLE ToursAttractions (
-    attractionId int,
-    tourId int,
-    name text,
-    latitude int,
-    longitude int,
-    description text,
-    rating int,
-    attraction_url varchar,
-    image_path text,
-    image_alt text,
-    startTime int, 
-    duration int,
-    admissionPrice int,
-    admissionNote text,
-    PRIMARY KEY(tourId,startTime), 
-) WITH CLUSTERING ORDER BY (startTime ASC);
-
-CREATE TABLE attractions (
-    attractionId int,
-    name text,
-    latitude int,
-    longitude int,
-    description text,
-    rating int,
-    attraction_url varchar,
-    image_path text,
-    image_alt text,
-    PRIMARY KEY(attractionId)
+DROP TABLE IF EXISTS snaketours.tours;
+--to query for tours
+CREATE TABLE snaketours.tours (
+  id int,
+  name text,
+  overview text,
+  cancellation_policy text,
+  return_details text,
+  created_at varchar,
+  updated_at varchar,
+  PRIMARY KEY((id), name, overview, cancellation_policy, return_details, created_at, updated_at)
 );
-
--- CREATE TABLE tour ( --fix
---     tourId int,
---     attractionId int,
---     name text,
---     overview text,
---     cancellation_policy text,
---     return_details text,
---     PRIMARY KEY(tourId)
---     -- tourId should be unique and attractionId can be many =>(partition key)?
--- )
--- -- WITH CLUSTERING ORDER BY (tourId ASC);
--- -- //the order on which data is stored
-
-
--- CREATE TABLE attractionsbytour (
---     attractionId int,
---     tourId int;
---     name text,
---     latitude int,
---     longitude int,
---     description text,
---     rating int,
---     attraction_url varchar,
---     image_path text,
---     image_alt text,
---     startTime int, --google 
---     duration int,
---     admissionPrice int,
---     admissionNote text,
---     PRIMARY KEY(tourId,startTime) --add startTime
--- ) WITH CLUSTERING ORDER BY (startTime ASC);
--- -- //the order on which data is stored
-
--- CREATE TABLE attractions (
---     attractionId int,
---     name text,
---     latitude int,
---     longitude int,
---     description text,
---     rating int,
---     attraction_url varchar,
---     image_path text,
---     image_alt text,
---     PRIMARY KEY(attractionId)
--- )
-
-
--- -- CREATE TABLE toursAttractions (
--- --     stopIndex int,
--- --     duration int,
--- --     admissionPrice int,
--- --     admissionNote text,
--- --     PRIMARY KEY(attractionId DESC, tourId DESC)
--- -- )
--- -------------------------------------------------
-
-
-
-CREATE TABLE tour (
-    tourId int,
-    name text,
-    overview text,
-    cancellation_policy text,
-    return_details text,
-    PRIMARY KEY(tourId)
-)WITH CLUSTERING ORDER BY (tourId ASC);
+DROP TABLE IF EXISTS snaketours.ToursAttractions;
+--to query for attractions
+CREATE TABLE snaketours.ToursAttractions (
+  created_at varchar,
+  updated_at varchar,
+  attraction_id int,
+  tour_id int,
+  PRIMARY KEY((created_at), updated_at, attraction_id, tour_id)
+);
+DROP TABLE IF EXISTS snaketours.attractions;
+CREATE TABLE snaketours.attractions (
+  id int,
+  name text,
+  latitude float,
+  longitude float,
+  description text,
+  rating float,
+  image_path text,
+  image_alt text,
+  created_at varchar,
+  updated_at varchar,
+  PRIMARY KEY((id), name, latitude, longitude, description, rating, image_path, image_alt, created_at, updated_at)
+);
+COPY snaketours.tours FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Service/tours.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+COPY snaketours.attractions FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Service/attractions.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+COPY snaketours.toursattractions FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Service/ToursAttractions.csv' WITH DELIMITER=',' AND HEADER=TRUE;

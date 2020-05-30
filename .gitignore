@@ -12,3 +12,6 @@ ToursAttractions.csv
 
 src/server/database/dataSchema/mongoDB.js
 src/server/database/modelsMySQL
+
+
+pg_analyse.md
