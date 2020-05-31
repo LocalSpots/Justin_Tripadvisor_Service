@@ -25,9 +25,11 @@ module.exports.getTour = function (id, callback) {
     });
 };
 
-module.exports.getRandomTour = function (callback) {
+module.exports.getRandomTour = function (id,callback) {
   Tour.findOne({
-    order: sequelize.fn('random'),
+    where: {
+      id,
+    },
     include: [
       {
         model: models.Attraction,

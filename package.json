@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "npx webpack && jest",
-    "start": "node src/server/database/seed/postgres/attractions.js && node src/server/database/seed/postgres/tours.js && node src/server/database/seed/postgres/ToursAttractions.js && node src/server/index.js",
-    "seed" : "psql -U postgres < src/server/database/dataSchema/postgres.sql"
+    "start": "node src/server/index.js",
+    "startstart": "node src/server/database/seed/postgres/attractions.js && node src/server/database/seed/postgres/tours.js && node src/server/database/seed/postgres/ToursAttractions.js",
+    "seed" : "psql -U postgres < src/server/database/dataSchema/postgres.sql",
+    "seedCql": "cqlsh < src/server/database/dataSchema/cassandra.cql",
+    "k6": "k6 run k6/script.js"
   },
   "repository": {
     "type": "git",
