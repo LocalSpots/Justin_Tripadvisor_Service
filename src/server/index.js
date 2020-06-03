@@ -1,3 +1,5 @@
+require('newrelic');
+
 let http = require('http');
 const app = require('./routes');
 const models = require('./database/modelsPostgres/index');

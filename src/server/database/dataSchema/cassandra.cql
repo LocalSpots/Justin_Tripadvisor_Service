@@ -8,7 +8,6 @@ CREATE KEYSPACE IF NOT EXISTS snaketours
 WITH replication = {'class' : 'SimpleStrategy', 'replication_factor': 3};
 USE snaketours;
 DROP TABLE IF EXISTS snaketours.tours;
---to query for tours
 CREATE TABLE snaketours.tours (
   id int,
   name text,
@@ -19,8 +18,8 @@ CREATE TABLE snaketours.tours (
   updated_at varchar,
   PRIMARY KEY((id), name, overview, cancellation_policy, return_details, created_at, updated_at)
 );
+
 DROP TABLE IF EXISTS snaketours.ToursAttractions;
---to query for attractions
 CREATE TABLE snaketours.ToursAttractions (
   created_at varchar,
   updated_at varchar,
@@ -28,6 +27,7 @@ CREATE TABLE snaketours.ToursAttractions (
   tour_id int,
   PRIMARY KEY((created_at), updated_at, attraction_id, tour_id)
 );
+
 DROP TABLE IF EXISTS snaketours.attractions;
 CREATE TABLE snaketours.attractions (
   id int,
@@ -42,6 +42,7 @@ CREATE TABLE snaketours.attractions (
   updated_at varchar,
   PRIMARY KEY((id), name, latitude, longitude, description, rating, image_path, image_alt, created_at, updated_at)
 );
+
 COPY snaketours.tours FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Service/tours.csv' WITH DELIMITER=',' AND HEADER=TRUE;
 COPY snaketours.attractions FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Service/attractions.csv' WITH DELIMITER=',' AND HEADER=TRUE;
 COPY snaketours.toursattractions FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Service/ToursAttractions.csv' WITH DELIMITER=',' AND HEADER=TRUE;
