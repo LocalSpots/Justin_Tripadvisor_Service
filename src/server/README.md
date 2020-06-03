@@ -151,21 +151,4 @@ Request Body: Expects JSON with any of the following keys (include only keys to 
 
 
 
-<!-- - DELETE `/attractions/:id`
-
-**Path Parameters:**
-
-- `id` tour : id
-
-**Success Status Code:** `204` -->
-
-
-
-<!-- - DELETE `/tour/:tour_id/tourAttraction/:attraction_id`
-
-**Path Parameters:**
-
-- `id` tour : id
-
-**Success Status Code:** `204` -->
 

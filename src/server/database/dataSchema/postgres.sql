@@ -1,5 +1,6 @@
 
 ------------------------------
+explain analyse
 DROP DATABASE IF EXISTS snaketours;
 CREATE DATABASE snaketours;
 \c snaketours;
@@ -81,8 +82,12 @@ FROM '/Users/justinguan/Desktop/HR/HRSF127/projects/SDC/Justin_Tripadvisor_Servi
 DELIMITER ',' CSV HEADER;
 
 
-CREATE INDEX tours_index ON tours(id,name,overview,cancellation_policy,return_details,created_at,updated_at);
+-- CREATE INDEX tours_index ON tours(id,name,overview,cancellation_policy,return_details,created_at,updated_at);
 
-CREATE INDEX attractions_index ON attractions(id,name,latitude,longitude, description,rating,image_path,image_alt,created_at,updated_at);
+-- CREATE INDEX attractions_index ON attractions(id,name,latitude,longitude, description,rating,image_path,image_alt,created_at,updated_at);
 
-CREATE INDEX ToursAttractions_index ON "ToursAttractions"(created_at,updated_at,attraction_id,tour_id);
+-- CREATE INDEX ToursAttractions_index ON "ToursAttractions"(created_at,updated_at,attraction_id,tour_id);
+
+CREATE UNIQUE INDEX tours_index ON tours(id);
+CREATE UNIQUE INDEX attractions_index ON attractions(id);
+CREATE UNIQUE INDEX toursattractions_index ON "ToursAttractions"(attraction_id, tour_id);
